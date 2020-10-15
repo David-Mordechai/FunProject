@@ -8,10 +8,8 @@ namespace FunProject.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ActivityLog> builder)
         {
-            builder
-                .HasOne(al => al.Customer)
-                .WithMany(c => c.ActivityLogs)
-                .HasForeignKey(al => al.CustomerId);
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
         }
     }
 }

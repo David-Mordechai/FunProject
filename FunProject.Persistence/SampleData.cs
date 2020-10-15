@@ -29,6 +29,8 @@ namespace FunProject.Persistence
             {
                 Id = 1,
                 CustomerId = 1,
+                FirstName = "Donald",
+                LastName = "Trump",
                 ActivityDate = new DateTime(2016, 11, 9),
                 ActionType = ActionType.Create,
             });
@@ -37,6 +39,8 @@ namespace FunProject.Persistence
             {
                 Id = 2,
                 CustomerId = 1,
+                FirstName = "Donald",
+                LastName = "Trump",
                 ActivityDate = new DateTime(2020, 11, 3),
                 ActionType = ActionType.Update,
             });

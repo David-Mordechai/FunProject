@@ -19,7 +19,6 @@ namespace FunProject.Persistence.ActivityLogs.Query
         public async Task<IList<ActivityLog>> Get()
         {
             return await _appDbContext.ActivityLogs
-                .Include(i => i.Customer)
                 .OrderByDescending(x => x.Id)
                 .ToListAsync();
         }
