@@ -36,16 +36,16 @@ namespace FunProject.Application.CustomersModule.Services
             _logger = logger;
         }
 
-        public async Task CreateCustomer(CustomerDto customer)
+        public async Task<IList<CustomerDto>> GetAllCustomers()
         {
-            _logger.LogInformation("Method CreateCustomer was hit...");
+            _logger.LogInformation("Method GetAllCustomers was hit...");
             try
             {
-                await _createCustomer.Create(_mapperAdapter.Map<Customer>(customer));
+                return _mapperAdapter.Map<IList<CustomerDto>>(await _getAllCustomers.Get());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Method CreateCustomer failed");
+                _logger.LogError(ex, "Method GetAllCustomers failed");
                 throw;
             }
         }
@@ -64,20 +64,20 @@ namespace FunProject.Application.CustomersModule.Services
             }
         }
 
-        public async Task<IList<CustomerDto>> GetAllCustomers()
+        public async Task CreateCustomer(CustomerDto customer)
         {
-            _logger.LogInformation("Method GetAllCustomers was hit...");
+            _logger.LogInformation("Method CreateCustomer was hit...");
             try
             {
-                return _mapperAdapter.Map<IList<CustomerDto>>(await _getAllCustomers.Get());
+                await _createCustomer.Create(_mapperAdapter.Map<Customer>(customer));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Method GetAllCustomers failed");
+                _logger.LogError(ex, "Method CreateCustomer failed");
                 throw;
             }
         }
-
+      
         public async Task DeleteCustomer(int? id)
         {
             _logger.LogInformation("Method DeleteCustomer was hit...");
