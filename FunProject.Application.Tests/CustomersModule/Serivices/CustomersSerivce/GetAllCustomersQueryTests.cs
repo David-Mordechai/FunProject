@@ -54,7 +54,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         }
 
         [Fact]
-        public async Task GetAllCustomers_ShouldReturnListOfCustomerDto()
+        public async Task GetAllCustomers_ShouldReturnListOfCustomerDtos()
         {
             var customersList = new List<Customer> 
             { 
@@ -104,20 +104,6 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
             var result = await sut.GetAllCustomers();
 
             _mapper.Verify(x => x.Map<IList<CustomerDto>>(new List<Customer>()), Times.Once());
-        }
-
-        [Fact]
-        public async Task GetAllCustomers_ShouldReturnCustomerDtoList()
-        {
-            _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
-            _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
-            _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(new List<Customer>());
-
-            var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
-
-            var result = await sut.GetAllCustomers();
-
-            Assert.IsAssignableFrom<IList<CustomerDto>>(result);
         }
 
         [Fact]

@@ -43,7 +43,9 @@ namespace FunProject.Application.CustomersModule.Services
             _logger.LogInformation("Method GetAllCustomers was hit...");
             try
             {
-                return _mapperAdapter.Map<IList<CustomerDto>>(await _getAllCustomersQuery.Get());
+                var result = await _getAllCustomersQuery.Get();
+                var mappedResult = _mapperAdapter.Map<IList<CustomerDto>>(result);
+                return mappedResult;
             }
             catch (Exception ex)
             {
