@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FunProject.Persistence.Customers.Query
 {
-    public class AllCustomers : IAllCustomers
+    public class AllCustomers : IAllCustomersQuery
     {
         private readonly AppDbContext _appDbContext;
 

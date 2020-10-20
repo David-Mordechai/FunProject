@@ -13,27 +13,29 @@ namespace FunProject.Application.CustomersModule.Services
 {
     public class CustomersService : ICustomersService
     {
-        private readonly ICustomerById _customerById;
-        private readonly IAllCustomers _getAllCustomers;
+        private readonly ILoggerAdapter<CustomersService> _logger;
+        private readonly IMapperAdapter _mapperAdapter;
+
+        private readonly ICustomerByIdQuery _customerByIdQuery;
+        private readonly IAllCustomersQuery _getAllCustomersQuery;
         private readonly ICreateCustomer _createCustomer;
         private readonly IDeleteCustomer _deleteCustomer;
-        private readonly IMapperAdapter _mapperAdapter;
-        private readonly ILoggerAdapter<CustomersService> _logger;
 
         public CustomersService(
-            ICustomerById customerById,
-            IAllCustomers allCustomers, 
-            ICreateCustomer createCustomer,
-            IDeleteCustomer deleteCustomer,
+            ILoggerAdapter<CustomersService> logger,
             IMapperAdapter mapperAdapter,
-            ILoggerAdapter<CustomersService> logger)
+            ICustomerByIdQuery customerByIdQuery,
+            IAllCustomersQuery allCustomersQuery, 
+            ICreateCustomer createCustomer,
+            IDeleteCustomer deleteCustomer
+            )
         {
-            _customerById = customerById;
-            _getAllCustomers = allCustomers;
+            _logger = logger;
+            _mapperAdapter = mapperAdapter;
+            _customerByIdQuery = customerByIdQuery;
+            _getAllCustomersQuery = allCustomersQuery;
             _createCustomer = createCustomer;
             _deleteCustomer = deleteCustomer;
-            _mapperAdapter = mapperAdapter;
-            _logger = logger;
         }
 
         public async Task<IList<CustomerDto>> GetAllCustomers()
@@ -41,7 +43,7 @@ namespace FunProject.Application.CustomersModule.Services
             _logger.LogInformation("Method GetAllCustomers was hit...");
             try
             {
-                return _mapperAdapter.Map<IList<CustomerDto>>(await _getAllCustomers.Get());
+                return _mapperAdapter.Map<IList<CustomerDto>>(await _getAllCustomersQuery.Get());
             }
             catch (Exception ex)
             {
@@ -55,7 +57,7 @@ namespace FunProject.Application.CustomersModule.Services
             _logger.LogInformation("Method GetCustomer was hit...");
             try
             {
-                return _mapperAdapter.Map<CustomerDto>(await _customerById.Get(id));
+                return _mapperAdapter.Map<CustomerDto>(await _customerByIdQuery.Get(id));
             }
             catch (Exception ex)
             {
@@ -83,7 +85,7 @@ namespace FunProject.Application.CustomersModule.Services
             _logger.LogInformation("Method DeleteCustomer was hit...");
             try
             {
-                var customer = await _customerById.Get(id);
+                var customer = await _customerByIdQuery.Get(id);
                 if (customer != null)
                 {
                     await _deleteCustomer.Delete(customer);

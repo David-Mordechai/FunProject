@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FunProject.Application.Data.Customers.Query
 {
-    public interface IAllCustomers
+    public interface IAllCustomersQuery
     {
         Task<IList<Customer>> Get();
     }

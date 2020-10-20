@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FunProject.Application.Data.Customers.Query
 {
-    public interface ICustomerById
+    public interface ICustomerByIdQuery
     {
         Task<Customer> Get(int? id);
     }

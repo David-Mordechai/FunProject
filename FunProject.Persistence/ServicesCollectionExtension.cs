@@ -17,8 +17,8 @@ namespace FunProject.Persistence
 
             // data services
             services.AddTransient<ISampleData, SampleData>();
-            services.AddTransient<ICustomerById, GetCustomer>();
-            services.AddTransient<IAllCustomers, AllCustomers>();
+            services.AddTransient<ICustomerByIdQuery, GetCustomer>();
+            services.AddTransient<IAllCustomersQuery, AllCustomers>();
             services.AddTransient<ICreateCustomer, CreateCustomer>();
             services.AddTransient<IDeleteCustomer, DeleteCustomer>();
 
