@@ -7,45 +7,44 @@ using FunProject.Domain.Mapper;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using static Xunit.Assert;
 
 namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivce
 {
-    public class GetAllCustomersQueryTests
+    public class GetAllCustomersMethodTests
     {
         private readonly Mock<ILoggerAdapter<CustomersService>> _logger;
         private readonly Mock<IMapperAdapter> _mapper;
         private readonly Mock<IAllCustomersQuery> _allCustomersQuery;
 
-        public GetAllCustomersQueryTests()
+        public GetAllCustomersMethodTests()
         {
             _logger = new Mock<ILoggerAdapter<CustomersService>>();
+            _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
+            
             _mapper = new Mock<IMapperAdapter>();
+            _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
+
             _allCustomersQuery = new Mock<IAllCustomersQuery>();
+            _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(new List<Customer>());
         }
 
         [Fact]
         public async Task GetAllCustomers_NoCustomersShouldReturnEmptyListAsync()
         {
-            _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
-            _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
-            _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(new List<Customer>());
-
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
             var result = await sut.GetAllCustomers();
 
-            Assert.Empty(result);
+            Empty(result);
         }
 
         [Fact]
-        public async Task GetAllCustomers_LogInformationWhenMethodWasCalledAsync()
+        public async Task GetAllCustomers_LogInformation_WhenMethodWasCalledAsync()
         {
-            _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
-            _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
-            _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(new List<Customer>());
-
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
             var result = await sut.GetAllCustomers();
@@ -67,7 +66,6 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
                 new CustomerDto { Id = 2, FirstName = "FirstName2", LastName = "LastName2" }
             };
 
-            _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
             _mapper.Setup(x => x.Map<IList<CustomerDto>>(customersList)).Returns(customerDtosList);
             _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(customersList);
 
@@ -75,16 +73,15 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
 
             var result = await sut.GetAllCustomers();
 
-            Assert.IsAssignableFrom<IList<CustomerDto>>(result);
+            IsAssignableFrom<IList<CustomerDto>>(result);
+            Equal(customerDtosList.First().Id, customersList.First().Id);
+            Equal(customerDtosList.First().FirstName, customersList.First().FirstName);
+            Equal(customerDtosList.First().LastName, customersList.First().LastName);
         }
 
         [Fact]
         public async Task GetAllCustomers_AllCustomersQuery_Get_ShouldBeInvoked()
         {
-            _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
-            _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
-            _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(new List<Customer>());
-
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
             var result = await sut.GetAllCustomers();
@@ -95,10 +92,6 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         [Fact]
         public async Task GetAllCustomers_AllCustomersQuery_Get_ResultShouldBeMappedFromCustomerListToCustomerDtoList()
         {
-            _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
-            _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
-            _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(new List<Customer>());
-
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
             var result = await sut.GetAllCustomers();
@@ -110,14 +103,12 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         public async Task GetAllCustomers_OnErrorLogErrorAndThrowException()
         {
             _logger.Setup(x => x.LogError(It.IsAny<Exception>(), It.IsAny<string>()));
-            _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
             _allCustomersQuery.Setup(x => x.Get()).Throws(new Exception());
 
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
-            var ex = await Assert.ThrowsAsync<Exception>(() => sut.GetAllCustomers());
+            var ex = await ThrowsAsync<Exception>(() => sut.GetAllCustomers());
             _logger.Verify(x => x.LogError(ex, "Method GetAllCustomers failed"), Times.Once);
         }
-
     }
 }
