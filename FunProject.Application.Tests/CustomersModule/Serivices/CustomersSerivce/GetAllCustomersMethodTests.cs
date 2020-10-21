@@ -100,7 +100,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         }
 
         [Fact]
-        public async Task GetAllCustomers_OnErrorLogErrorAndThrowException()
+        public async Task GetAllCustomers_OnError_LogError_And_ThrowException()
         {
             _logger.Setup(x => x.LogError(It.IsAny<Exception>(), It.IsAny<string>()));
             _allCustomersQuery.Setup(x => x.Get()).Throws(new Exception());
