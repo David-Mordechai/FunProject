@@ -18,7 +18,7 @@ namespace FunProject.Application.CustomersModule.Services
 
         private readonly ICustomerByIdQuery _customerByIdQuery;
         private readonly IAllCustomersQuery _getAllCustomersQuery;
-        private readonly ICreateCustomer _createCustomer;
+        private readonly ICreateCustomerCommand _createCustomerCommand;
         private readonly IDeleteCustomer _deleteCustomer;
 
         public CustomersService(
@@ -26,7 +26,7 @@ namespace FunProject.Application.CustomersModule.Services
             IMapperAdapter mapperAdapter,
             ICustomerByIdQuery customerByIdQuery,
             IAllCustomersQuery allCustomersQuery, 
-            ICreateCustomer createCustomer,
+            ICreateCustomerCommand createCustomerCommand,
             IDeleteCustomer deleteCustomer
             )
         {
@@ -34,7 +34,7 @@ namespace FunProject.Application.CustomersModule.Services
             _mapperAdapter = mapperAdapter;
             _customerByIdQuery = customerByIdQuery;
             _getAllCustomersQuery = allCustomersQuery;
-            _createCustomer = createCustomer;
+            _createCustomerCommand = createCustomerCommand;
             _deleteCustomer = deleteCustomer;
         }
 
@@ -68,12 +68,16 @@ namespace FunProject.Application.CustomersModule.Services
             }
         }
 
-        public async Task CreateCustomer(CustomerDto customer)
+        public async Task<CustomerDto> CreateCustomer(CustomerDto customer)
         {
             _logger.LogInformation("Method CreateCustomer was hit...");
             try
             {
-                await _createCustomer.Create(_mapperAdapter.Map<Customer>(customer));
+                var dto = _mapperAdapter.Map<Customer>(customer);
+                var result = await _createCustomerCommand.Create(dto);
+                //var createdCustomer = await _createCustomerCommand.Create(_mapperAdapter.Map<Customer>(customer));
+                var createdCustomer = _mapperAdapter.Map<CustomerDto>(result);
+                return createdCustomer;
             }
             catch (Exception ex)
             {

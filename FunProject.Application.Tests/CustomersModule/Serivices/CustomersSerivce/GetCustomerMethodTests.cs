@@ -33,7 +33,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         }
 
         [Fact]
-        public async Task GetCustomers_LogInformation_WhenMethodWasCalledAsync()
+        public async Task GetCustomer_LogInformation_WhenMethodWasCalledAsync()
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, _customerByIdQuery.Object, null, null, null);
 

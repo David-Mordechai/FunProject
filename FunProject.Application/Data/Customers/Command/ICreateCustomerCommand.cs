@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace FunProject.Application.Data.Customers.Command
 {
-    public interface ICreateCustomer
+    public interface ICreateCustomerCommand
     {
-        Task Create(Customer customer);
+        Task<Customer> Create(Customer customer);
     }
 }

@@ -7,8 +7,8 @@ namespace FunProject.Application.CustomersModule.Services.Interfaces
     public interface ICustomersService
     {
         Task<IList<CustomerDto>> GetAllCustomers();
-        Task CreateCustomer(CustomerDto customer);
         Task<CustomerDto> GetCustomer(int? id);
+        Task<CustomerDto> CreateCustomer(CustomerDto customer);
         Task DeleteCustomer(int? id);
     }
 }

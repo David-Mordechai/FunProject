@@ -4,19 +4,20 @@ using System.Threading.Tasks;
 
 namespace FunProject.Persistence.Customers.Command
 {
-    public class CreateCustomer : ICreateCustomer
+    public class CreateCustomerCommand : ICreateCustomerCommand
     {
         private readonly AppDbContext _appDbContext;
 
-        public CreateCustomer(AppDbContext appDbContext)
+        public CreateCustomerCommand(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public async Task Create(Customer customer)
+        public async Task<Customer> Create(Customer customer)
         {
             _appDbContext.Customers.Add(customer);
             await _appDbContext.SaveChangesAsync();
+            return customer;
         }
     }
 }
