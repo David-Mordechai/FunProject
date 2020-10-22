@@ -43,7 +43,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
 
             var result = await sut.CreateCustomer(_customerDto);
 
-            _logger.Verify(x => x.LogInformation("Method CreateCustomer was hit..."), Times.Once);
+            _logger.Verify(x => x.LogInformation("Method CreateCustomer Invoked."), Times.Once);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, null, _createCustomerCommand.Object, null);
 
             var ex = await ThrowsAsync<Exception>(() => sut.CreateCustomer(_customerDto));
-            _logger.Verify(x => x.LogError(ex, "Method CreateCustomer failed"), Times.Once);
+            _logger.Verify(x => x.LogError(ex, "Method CreateCustomer failed."), Times.Once);
         }
     }
 }

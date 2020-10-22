@@ -39,7 +39,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
 
             var result = await sut.GetCustomer(1);
 
-            _logger.Verify(x => x.LogInformation("Method GetCustomer was hit..."), Times.Once);
+            _logger.Verify(x => x.LogInformation("Method GetCustomer Invoked."), Times.Once);
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
             var sut = new CustomersService(_logger.Object, _mapper.Object, _customerByIdQuery.Object, null, null, null);
 
             var ex = await ThrowsAsync<Exception>(() => sut.GetCustomer(1));
-            _logger.Verify(x => x.LogError(ex, "Method GetCustomer failed"), Times.Once);
+            _logger.Verify(x => x.LogError(ex, "Method GetCustomer failed."), Times.Once);
         }
     }
 }

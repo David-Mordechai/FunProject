@@ -19,7 +19,7 @@ namespace FunProject.Application.CustomersModule.Services
         private readonly ICustomerByIdQuery _customerByIdQuery;
         private readonly IAllCustomersQuery _getAllCustomersQuery;
         private readonly ICreateCustomerCommand _createCustomerCommand;
-        private readonly IDeleteCustomer _deleteCustomer;
+        private readonly IDeleteCustomerCommand _deleteCustomerCommand;
 
         public CustomersService(
             ILoggerAdapter<CustomersService> logger,
@@ -27,7 +27,7 @@ namespace FunProject.Application.CustomersModule.Services
             ICustomerByIdQuery customerByIdQuery,
             IAllCustomersQuery allCustomersQuery, 
             ICreateCustomerCommand createCustomerCommand,
-            IDeleteCustomer deleteCustomer
+            IDeleteCustomerCommand deleteCustomerCommand
             )
         {
             _logger = logger;
@@ -35,12 +35,12 @@ namespace FunProject.Application.CustomersModule.Services
             _customerByIdQuery = customerByIdQuery;
             _getAllCustomersQuery = allCustomersQuery;
             _createCustomerCommand = createCustomerCommand;
-            _deleteCustomer = deleteCustomer;
+            _deleteCustomerCommand = deleteCustomerCommand;
         }
 
         public async Task<IList<CustomerDto>> GetAllCustomers()
         {
-            _logger.LogInformation("Method GetAllCustomers was hit...");
+            _logger.LogInformation("Method GetAllCustomers Invoked.");
             try
             {
                 var result = await _getAllCustomersQuery.Get();
@@ -49,57 +49,54 @@ namespace FunProject.Application.CustomersModule.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Method GetAllCustomers failed");
+                _logger.LogError(ex, "Method GetAllCustomers failed.");
                 throw;
             }
         }
 
         public async Task<CustomerDto> GetCustomer(int? id)
         {
-            _logger.LogInformation("Method GetCustomer was hit...");
+            _logger.LogInformation("Method GetCustomer Invoked.");
             try
             {
                 return _mapperAdapter.Map<CustomerDto>(await _customerByIdQuery.Get(id));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Method GetCustomer failed");
+                _logger.LogError(ex, "Method GetCustomer failed.");
                 throw;
             }
         }
 
         public async Task<CustomerDto> CreateCustomer(CustomerDto customer)
         {
-            _logger.LogInformation("Method CreateCustomer was hit...");
+            _logger.LogInformation("Method CreateCustomer Invoked.");
             try
             {
-                var dto = _mapperAdapter.Map<Customer>(customer);
-                var result = await _createCustomerCommand.Create(dto);
-                //var createdCustomer = await _createCustomerCommand.Create(_mapperAdapter.Map<Customer>(customer));
-                var createdCustomer = _mapperAdapter.Map<CustomerDto>(result);
-                return createdCustomer;
+                var createdCustomer = await _createCustomerCommand.Create(_mapperAdapter.Map<Customer>(customer));
+                return _mapperAdapter.Map<CustomerDto>(createdCustomer);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Method CreateCustomer failed");
+                _logger.LogError(ex, "Method CreateCustomer failed.");
                 throw;
             }
         }
       
         public async Task DeleteCustomer(int? id)
         {
-            _logger.LogInformation("Method DeleteCustomer was hit...");
+            _logger.LogInformation("Method DeleteCustomer Invoked.");
             try
             {
                 var customer = await _customerByIdQuery.Get(id);
                 if (customer != null)
                 {
-                    await _deleteCustomer.Delete(customer);
+                    await _deleteCustomerCommand.Delete(customer);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Mehtod DeleteCustomer failed");
+                _logger.LogError(ex, "Mehtod DeleteCustomer failed.");
                 throw;
             }
         }

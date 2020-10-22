@@ -27,14 +27,14 @@ namespace FunProject.Application.ActivityLogModule.Services
 
         public async Task<IList<ActivityLogDto>> GetAllActivityLogs()
         {
-            _logger.LogInformation("Method GetAllActivityLogs was hit...");
+            _logger.LogInformation("Method GetAllActivityLogs Invoked.");
             try
             {
                 return _mapperAdapter.Map<IList<ActivityLogDto>>(await _allActivityLogs.Get());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Method GetAllActivityLogs failed");
+                _logger.LogError(ex, "Method GetAllActivityLogs failed.");
                 throw;
             }
         }

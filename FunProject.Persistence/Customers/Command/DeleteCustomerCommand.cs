@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace FunProject.Persistence.Customers.Command
 {
-    public class DeleteCustomer : IDeleteCustomer
+    public class DeleteCustomerCommand : IDeleteCustomerCommand
     {
         private readonly AppDbContext _appDbContext;
 
-        public DeleteCustomer(AppDbContext appDbContext)
+        public DeleteCustomerCommand(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
