@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Xunit;
 using static Xunit.Assert;
 
-namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivce
+namespace FunProject.Application.Tests.CustomersModule.Services.CustomersServiceTests
 {
     public class GetAllCustomersMethodTests
     {
@@ -24,7 +24,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         {
             _logger = new Mock<ILoggerAdapter<CustomersService>>();
             _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
-            
+
             _mapper = new Mock<IMapperAdapter>();
             _mapper.Setup(x => x.Map<IList<CustomerDto>>(new List<Customer>())).Returns(new List<CustomerDto>());
 
@@ -55,10 +55,10 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         [Fact]
         public async Task GetAllCustomers_ShouldReturnListOfCustomerDtos()
         {
-            var customersList = new List<Customer> 
-            { 
-                new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" }, 
-                new Customer { Id = 2, FirstName = "FirstName2", LastName = "LastName2" } 
+            var customersList = new List<Customer>
+            {
+                new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" },
+                new Customer { Id = 2, FirstName = "FirstName2", LastName = "LastName2" }
             };
             var customerDtosList = new List<CustomerDto>
             {

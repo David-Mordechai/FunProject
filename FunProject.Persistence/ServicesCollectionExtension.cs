@@ -22,7 +22,7 @@ namespace FunProject.Persistence
             services.AddTransient<ICreateCustomerCommand, CreateCustomerCommand>();
             services.AddTransient<IDeleteCustomerCommand, DeleteCustomerCommand>();
 
-            services.AddTransient<IAllActivityLogs, AllActivityLogs>();
+            services.AddTransient<IAllActivityLogsQuery, AllActivityLogsQuery>();
         }
     }
 }

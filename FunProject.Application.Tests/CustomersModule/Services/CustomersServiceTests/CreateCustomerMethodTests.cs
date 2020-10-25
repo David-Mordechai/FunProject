@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 using Xunit;
 using static Xunit.Assert;
 
-namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivce
+namespace FunProject.Application.Tests.CustomersModule.Services.CustomersServiceTests
 {
     public class CreateCustomerMethodTests
     {
         private readonly Customer _customer = new Customer { Id = 0, FirstName = "FirstName1", LastName = "LastName1" };
         private readonly CustomerDto _customerDto = new CustomerDto { Id = 0, FirstName = "FirstName1", LastName = "LastName1" };
-        
+
         private readonly Customer _createdCustomer = new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
         private readonly CustomerDto _createdCustomerDto = new CustomerDto { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
-        
+
         private readonly Mock<ILoggerAdapter<CustomersService>> _logger;
         private readonly Mock<IMapperAdapter> _mapper;
         private readonly Mock<ICreateCustomerCommand> _createCustomerCommand;

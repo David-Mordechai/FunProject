@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FunProject.Persistence.ActivityLogs.Query
 {
-    public class AllActivityLogs : IAllActivityLogs
+    public class AllActivityLogsQuery : IAllActivityLogsQuery
     {
         private readonly AppDbContext _appDbContext;
 
-        public AllActivityLogs(AppDbContext appDbContext)
+        public AllActivityLogsQuery(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

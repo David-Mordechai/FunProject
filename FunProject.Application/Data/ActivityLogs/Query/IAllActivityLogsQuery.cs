@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FunProject.Application.Data.ActivityLogs.Query
 {
-    public interface IAllActivityLogs
+    public interface IAllActivityLogsQuery
     {
         Task<IList<ActivityLog>> Get();
     }

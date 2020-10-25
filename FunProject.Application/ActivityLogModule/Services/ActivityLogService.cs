@@ -11,18 +11,18 @@ namespace FunProject.Application.ActivityLogModule.Services
 {
     public class ActivityLogService : IActivityLogService
     {
-        private readonly IAllActivityLogs _allActivityLogs;
-        private readonly IMapperAdapter _mapperAdapter;
         private readonly ILoggerAdapter<ActivityLogService> _logger;
+        private readonly IMapperAdapter _mapperAdapter;
+        private readonly IAllActivityLogsQuery _allActivityLogsQuery;
 
         public ActivityLogService(
-            IAllActivityLogs allActivityLogs,
+            ILoggerAdapter<ActivityLogService> logger,
             IMapperAdapter mapperAdapter, 
-            ILoggerAdapter<ActivityLogService> logger)
+            IAllActivityLogsQuery allActivityLogsQuery)
         {
-            _allActivityLogs = allActivityLogs;
-            _mapperAdapter = mapperAdapter;
             _logger = logger;
+            _mapperAdapter = mapperAdapter;
+            _allActivityLogsQuery = allActivityLogsQuery;
         }
 
         public async Task<IList<ActivityLogDto>> GetAllActivityLogs()
@@ -30,7 +30,7 @@ namespace FunProject.Application.ActivityLogModule.Services
             _logger.LogInformation("Method GetAllActivityLogs Invoked.");
             try
             {
-                return _mapperAdapter.Map<IList<ActivityLogDto>>(await _allActivityLogs.Get());
+                return _mapperAdapter.Map<IList<ActivityLogDto>>(await _allActivityLogsQuery.Get());
             }
             catch (Exception ex)
             {

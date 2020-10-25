@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Xunit;
 using static Xunit.Assert;
 
-namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivce
+namespace FunProject.Application.Tests.CustomersModule.Services.CustomersServiceTests
 {
     public class GetCustomerMethodTests
     {
@@ -19,7 +19,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         private readonly Mock<ICustomerByIdQuery> _customerByIdQuery;
         private readonly Customer _customer = new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
         private readonly CustomerDto _customerDto = new CustomerDto { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
-        
+
         public GetCustomerMethodTests()
         {
             _logger = new Mock<ILoggerAdapter<CustomersService>>();

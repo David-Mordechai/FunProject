@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xunit;
 using static Xunit.Assert;
 
-namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivce
+namespace FunProject.Application.Tests.CustomersModule.Services.CustomersServiceTests
 {
     public class DeleteCustomerMethodTests
     {
@@ -55,7 +55,7 @@ namespace FunProject.Application.Tests.CustomersModule.Serivices.CustomersSerivc
         {
             var sut = new CustomersService(_logger.Object, null, _customerByIdQuery.Object, null, null, _deleteCustomerCommand.Object);
             _customerByIdQuery.Setup(x => x.Get(1)).ReturnsAsync(() => null);
-            
+
             await sut.DeleteCustomer(1);
 
             _deleteCustomerCommand.Verify(x => x.Delete(null), Times.Never);
