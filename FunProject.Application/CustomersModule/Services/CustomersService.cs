@@ -96,7 +96,7 @@ namespace FunProject.Application.CustomersModule.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Mehtod DeleteCustomer failed.");
+                _logger.LogError(ex, "Method DeleteCustomer failed.");
                 throw;
             }
         }
