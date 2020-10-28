@@ -33,17 +33,17 @@ namespace FunProject.Web.Pages.Customers
             }
             return Page();
         }
+        // Uncommint this Method to start the Task
+        // public async Task<IActionResult> OnPostAsync()
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return Page();
+        //     }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //     // Task #1
 
-            // Task #1
-
-            return RedirectToPage("./Index");
-        }
+        //     return RedirectToPage("./Index");
+        // }
     }
 }
