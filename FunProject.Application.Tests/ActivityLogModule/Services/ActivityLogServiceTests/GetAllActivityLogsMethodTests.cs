@@ -20,7 +20,7 @@ namespace FunProject.Application.Tests.ActivityLogModule.Services.ActivityLogSer
         private readonly Mock<IMapperAdapter> _mapper;
         private readonly Mock<IAllActivityLogsQuery> _allActivityLogsQuery;
 
-        private static readonly DateTime activityDate = new DateTime(2020, 01, 15);
+        private static readonly DateTime activityDate = new(2020, 01, 15);
 
         private  readonly IList<ActivityLog> _activityLogs = new List<ActivityLog>
         {

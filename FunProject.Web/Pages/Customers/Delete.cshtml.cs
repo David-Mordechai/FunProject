@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FunProject.Application.CustomersModule.Services.Interfaces;
 using FunProject.Application.CustomersModule.Dtos;

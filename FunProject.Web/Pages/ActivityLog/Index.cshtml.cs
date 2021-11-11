@@ -1,8 +1,6 @@
 using FunProject.Application.ActivityLogModule.Dtos;
 using FunProject.Application.ActivityLogModule.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FunProject.Web.Pages.ActivityLog
 {

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FunProject.Application.ActivityLogModule.Services;
+﻿using FunProject.Application.ActivityLogModule.Services;
 using FunProject.Application.ActivityLogModule.Services.Interfaces;
 using FunProject.Application.CustomersModule.Services;
 using FunProject.Application.CustomersModule.Services.Interfaces;

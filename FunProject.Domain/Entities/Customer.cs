@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FunProject.Domain.Entities
+﻿namespace FunProject.Domain.Entities
 {
     public class Customer
     {
