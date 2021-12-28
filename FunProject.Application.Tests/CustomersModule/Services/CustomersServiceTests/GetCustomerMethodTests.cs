@@ -17,8 +17,8 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         private readonly Mock<ILoggerAdapter<CustomersService>> _logger;
         private readonly Mock<IMapperAdapter> _mapper;
         private readonly Mock<ICustomerByIdQuery> _customerByIdQuery;
-        private readonly Customer _customer = new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
-        private readonly CustomerDto _customerDto = new CustomerDto { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
+        private readonly Customer _customer = new() { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
+        private readonly CustomerDto _customerDto = new() { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
 
         public GetCustomerMethodTests()
         {
@@ -37,7 +37,7 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, _customerByIdQuery.Object, null, null, null);
 
-            var result = await sut.GetCustomer(1);
+            await sut.GetCustomer(1);
 
             _logger.Verify(x => x.LogInformation("Method GetCustomer Invoked."), Times.Once);
         }
@@ -75,7 +75,7 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, _customerByIdQuery.Object, null, null, null);
 
-            var result = await sut.GetCustomer(1);
+            await sut.GetCustomer(1);
 
             _customerByIdQuery.Verify(x => x.Get(1), Times.Once());
         }
@@ -85,7 +85,7 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, _customerByIdQuery.Object, null, null, null);
 
-            var result = await sut.GetCustomer(1);
+            await sut.GetCustomer(1);
 
             _mapper.Verify(x => x.Map<CustomerDto>(_customer), Times.Once());
         }
