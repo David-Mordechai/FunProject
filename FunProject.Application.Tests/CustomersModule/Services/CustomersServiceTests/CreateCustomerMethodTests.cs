@@ -14,11 +14,11 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
 {
     public class CreateCustomerMethodTests
     {
-        private readonly Customer _customer = new Customer { Id = 0, FirstName = "FirstName1", LastName = "LastName1" };
-        private readonly CustomerDto _customerDto = new CustomerDto { Id = 0, FirstName = "FirstName1", LastName = "LastName1" };
+        private readonly Customer _customer = new() { Id = 0, FirstName = "FirstName1", LastName = "LastName1" };
+        private readonly CustomerDto _customerDto = new() { Id = 0, FirstName = "FirstName1", LastName = "LastName1" };
 
-        private readonly Customer _createdCustomer = new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
-        private readonly CustomerDto _createdCustomerDto = new CustomerDto { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
+        private readonly Customer _createdCustomer = new() { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
+        private readonly CustomerDto _createdCustomerDto = new() { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
 
         private readonly Mock<ILoggerAdapter<CustomersService>> _logger;
         private readonly Mock<IMapperAdapter> _mapper;
@@ -41,7 +41,7 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, null, _createCustomerCommand.Object, null);
 
-            var result = await sut.CreateCustomer(_customerDto);
+            await sut.CreateCustomer(_customerDto);
 
             _logger.Verify(x => x.LogInformation("Method CreateCustomer Invoked."), Times.Once);
         }
@@ -51,13 +51,13 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, null, _createCustomerCommand.Object, null);
 
-            var result = await sut.CreateCustomer(_customerDto);
+            await sut.CreateCustomer(_customerDto);
 
             _mapper.Verify(x => x.Map<Customer>(_customerDto), Times.Once());
         }
 
         [Fact]
-        public async Task CreateCustomer_CustomerCreated_Successefully()
+        public async Task CreateCustomer_CustomerCreated_Successfully()
         {
             _mapper.Setup(x => x.Map<CustomerDto>(_createdCustomer)).Returns(_createdCustomerDto);
 

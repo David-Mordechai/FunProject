@@ -20,28 +20,30 @@ namespace FunProject.Application.Tests.ActivityLogModule.Services.ActivityLogSer
         private readonly Mock<IMapperAdapter> _mapper;
         private readonly Mock<IAllActivityLogsQuery> _allActivityLogsQuery;
 
-        private static readonly DateTime activityDate = new(2020, 01, 15);
+        private static readonly DateTime ActivityDate = new(2020, 01, 15);
 
         private  readonly IList<ActivityLog> _activityLogs = new List<ActivityLog>
         {
-            new ActivityLog{
+            new()
+            {
                 Id = 1, 
                 CustomerId= 1, 
                 FirstName = "FirstName1", 
                 LastName = "LastName1", 
-                ActivityDate = activityDate, 
+                ActivityDate = ActivityDate, 
                 ActionType = ActionType.Create 
             }
         };
 
-        private readonly IList<ActivityLogDto> _activityLogsDtos = new List<ActivityLogDto>
+        private readonly IList<ActivityLogDto> _activityLogsDtoList = new List<ActivityLogDto>
         {
-            new ActivityLogDto{
+            new()
+            {
                 Id = 1,
                 CustomerId= 1,
                 FirstName = "FirstName1",
                 LastName = "LastName1",
-                ActivityDate = activityDate,
+                ActivityDate = ActivityDate,
                 ActionType = ActionType.Create
             }
         };
@@ -52,7 +54,7 @@ namespace FunProject.Application.Tests.ActivityLogModule.Services.ActivityLogSer
             _logger.Setup(x => x.LogInformation(It.IsAny<string>()));
 
             _mapper = new Mock<IMapperAdapter>();
-            _mapper.Setup(x => x.Map<IList<ActivityLogDto>>(_activityLogs)).Returns(_activityLogsDtos);
+            _mapper.Setup(x => x.Map<IList<ActivityLogDto>>(_activityLogs)).Returns(_activityLogsDtoList);
 
             _allActivityLogsQuery = new Mock<IAllActivityLogsQuery>();
             _allActivityLogsQuery.Setup(x => x.Get()).ReturnsAsync(_activityLogs);
@@ -63,7 +65,7 @@ namespace FunProject.Application.Tests.ActivityLogModule.Services.ActivityLogSer
         {
             var sut = new ActivityLogService(_logger.Object, _mapper.Object, _allActivityLogsQuery.Object);
 
-            var result = await sut.GetAllActivityLogs();
+            await sut.GetAllActivityLogs();
 
             _logger.Verify(x => x.LogInformation("Method GetAllActivityLogs Invoked."), Times.Once,
                 "Information log was not logged.");
@@ -86,21 +88,21 @@ namespace FunProject.Application.Tests.ActivityLogModule.Services.ActivityLogSer
         {
             var sut = new ActivityLogService(_logger.Object, _mapper.Object, _allActivityLogsQuery.Object);
 
-            var result = await sut.GetAllActivityLogs();
+            await sut.GetAllActivityLogs();
 
             _allActivityLogsQuery.Verify(x => x.Get(), Times.Once, 
-                "AllActivityLogsQuery.Get Mothod should be Invoked.");
+                "AllActivityLogsQuery.Get Method should be Invoked.");
         }
 
         [Fact]
-        public async Task GetAllActivityLogs_AllActivityLogsQuery_Get_Result_MapTo_ActivityLogDtosList_Async()
+        public async Task GetAllActivityLogs_AllActivityLogsQuery_Get_Result_MapTo_ActivityLogDtoList_Async()
         {
             var sut = new ActivityLogService(_logger.Object, _mapper.Object, _allActivityLogsQuery.Object);
 
-            var result = await sut.GetAllActivityLogs();
+            await sut.GetAllActivityLogs();
 
             _mapper.Verify(x => x.Map<IList<ActivityLogDto>>(_activityLogs), Times.Once(), 
-                "AllActivityLogsQuery.Get Mothod result should be mapped from entity to dto list.");
+                "AllActivityLogsQuery.Get Method result should be mapped from entity to dto list.");
         }
 
         [Fact]
@@ -110,7 +112,7 @@ namespace FunProject.Application.Tests.ActivityLogModule.Services.ActivityLogSer
             
             var result = await sut.GetAllActivityLogs();
 
-            Equal(_activityLogsDtos, result);
+            Equal(_activityLogsDtoList, result);
         }
 
         [Fact]

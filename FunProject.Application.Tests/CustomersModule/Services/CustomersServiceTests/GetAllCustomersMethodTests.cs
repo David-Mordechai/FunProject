@@ -47,26 +47,26 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
-            var result = await sut.GetAllCustomers();
+            await sut.GetAllCustomers();
 
             _logger.Verify(x => x.LogInformation("Method GetAllCustomers Invoked."), Times.Once);
         }
 
         [Fact]
-        public async Task GetAllCustomers_ShouldReturnListOfCustomerDtos()
+        public async Task GetAllCustomers_ShouldReturnListOfCustomerDto()
         {
             var customersList = new List<Customer>
             {
-                new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" },
-                new Customer { Id = 2, FirstName = "FirstName2", LastName = "LastName2" }
+                new() { Id = 1, FirstName = "FirstName1", LastName = "LastName1" },
+                new() { Id = 2, FirstName = "FirstName2", LastName = "LastName2" }
             };
-            var customerDtosList = new List<CustomerDto>
+            var customerDtoList = new List<CustomerDto>
             {
-                new CustomerDto { Id = 1, FirstName = "FirstName1", LastName = "LastName1" },
-                new CustomerDto { Id = 2, FirstName = "FirstName2", LastName = "LastName2" }
+                new() { Id = 1, FirstName = "FirstName1", LastName = "LastName1" },
+                new() { Id = 2, FirstName = "FirstName2", LastName = "LastName2" }
             };
 
-            _mapper.Setup(x => x.Map<IList<CustomerDto>>(customersList)).Returns(customerDtosList);
+            _mapper.Setup(x => x.Map<IList<CustomerDto>>(customersList)).Returns(customerDtoList);
             _allCustomersQuery.Setup(x => x.Get()).ReturnsAsync(customersList);
 
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
@@ -74,9 +74,9 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
             var result = await sut.GetAllCustomers();
 
             IsAssignableFrom<IList<CustomerDto>>(result);
-            Equal(customerDtosList.First().Id, customersList.First().Id);
-            Equal(customerDtosList.First().FirstName, customersList.First().FirstName);
-            Equal(customerDtosList.First().LastName, customersList.First().LastName);
+            Equal(customerDtoList.First().Id, customersList.First().Id);
+            Equal(customerDtoList.First().FirstName, customersList.First().FirstName);
+            Equal(customerDtoList.First().LastName, customersList.First().LastName);
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
-            var result = await sut.GetAllCustomers();
+            await sut.GetAllCustomers();
 
             _allCustomersQuery.Verify(x => x.Get(), Times.Once());
         }
@@ -94,7 +94,7 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
         {
             var sut = new CustomersService(_logger.Object, _mapper.Object, null, _allCustomersQuery.Object, null, null);
 
-            var result = await sut.GetAllCustomers();
+            await sut.GetAllCustomers();
 
             _mapper.Verify(x => x.Map<IList<CustomerDto>>(new List<Customer>()), Times.Once());
         }

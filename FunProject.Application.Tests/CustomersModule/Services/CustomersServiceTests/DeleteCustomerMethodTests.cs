@@ -13,7 +13,7 @@ namespace FunProject.Application.Tests.CustomersModule.Services.CustomersService
 {
     public class DeleteCustomerMethodTests
     {
-        private readonly Customer _customer = new Customer { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
+        private readonly Customer _customer = new() { Id = 1, FirstName = "FirstName1", LastName = "LastName1" };
         private readonly Mock<ILoggerAdapter<CustomersService>> _logger;
         private readonly Mock<IDeleteCustomerCommand> _deleteCustomerCommand;
         private readonly Mock<ICustomerByIdQuery> _customerByIdQuery;
